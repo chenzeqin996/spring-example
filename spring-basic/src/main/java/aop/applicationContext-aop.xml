@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+    <bean id="personDao_aop" class="aop.PersonDaoImpl"></bean>
+    <bean id="transation_aop" class="aop.Transation"></bean>
+    
+    <aop:config>
+    	<!-- 切入点表达式 -->
+    	<aop:pointcut expression="execution(* aop.PersonDaoImpl.*(..))" id="cut1"/>
+    	<!-- 切面 -->
+    	<aop:aspect ref="transation_aop">
+    		<!-- 前置通知 -->
+    		<aop:before method="beginTransation" pointcut-ref="cut1"/>
+    		<!-- 后置通知 -->
+    		<!-- 后置通知可以接受目标方法的返回值，但是必须注意：后置通知的参数的名称和配置文件中returning="var"的值是一致的  -->
+    		<aop:after-returning method="commitTransation" pointcut-ref="cut1" returning="msg"/>
+    		<!-- 最终通知 -->
+    		<aop:after method="finallyMethod" pointcut-ref="cut1"/>
+    		<!-- 异常通知 -->
+    		<!-- throwing="ex"的值要与异常通知方法（throwingMethod(Throwable ex)）的参数名称一致，跟后置通知一样 -->
+			<aop:after-throwing method="throwingMethod" pointcut-ref="cut1" throwing="ex"/>    		
+    		<!-- 环绕通知 -->
+    		<!-- <aop:around method="aroundMethod" pointcut-ref="cut1"/> -->
+    	</aop:aspect>
+    </aop:config>
+</beans>    

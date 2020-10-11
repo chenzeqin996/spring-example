@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    
+    <!-- 把一个bean放到spring容器中 -->    
+	<bean id="helloWorld2" class="createObject.HelloWorld"></bean> 
+	
+	<!-- 引入其他配置文件 -->
+	<import resource="createObject/applicationContext-createObject.xml"/>  
+	<import resource="di/set/applicationContext-di-set.xml"/>  
+	<import resource="di/constructor/applicationContext-di-constructor.xml"/>  
+	<import resource="di/annotation/applicationContext-di-annotation.xml"/>  
+	<import resource="scan/annotation/applicationContext-scan-annotation.xml"/>  
+</beans>         
